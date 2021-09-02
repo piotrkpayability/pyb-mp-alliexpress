@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -13,7 +13,7 @@ import Logo from "../../assets/AliExpress-Logo.wine.svg";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -31,8 +31,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
+
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+  });
+
+  const integrate = () => {
+    props.integrate(state);
+  }
+
+  const handleEmailChange = (e) => {
+    setState({
+      ...state,
+      email: e.target.value
+    });
+  }
+
+  const handlePasswordChange = (e) => {
+    setState({
+      ...state,
+      password: e.target.value
+    });
+  }
 
   return (
       <Container component="main" maxWidth="xs">
@@ -53,6 +76,8 @@ export default function SignUp() {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
+                    value={state.email}
+                    onChange={handleEmailChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -65,6 +90,7 @@ export default function SignUp() {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    onChange={handlePasswordChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -75,11 +101,12 @@ export default function SignUp() {
               </Grid>
             </Grid>
             <Button
-                type="submit"
+                type="button"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={integrate}
             >
               Sign In
             </Button>

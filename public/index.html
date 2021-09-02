@@ -1,7 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
+  <head>
+    <script type="application/javascript" src="http://localhost:3000/pyb-web-components.js"></script>
+    <script type="application/javascript" src="http://localhost:8080/remoteEntry.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+  </head>
   <body>
-    <pyb-mp-alliexpress></pyb-mp-alliexpress>
+    <script>
+      function integrateFun(e){
+        console.log('integrateFun',e);
+      }
+    </script>
+
+    <pyb-mp-status id="conf" style="width: 500px; height: 400px; display: block;">
+        <div slot="content">
+          <pyb-mp-alliexpress id="alliexpress"></pyb-mp-alliexpress>
+        </div>
+    </pyb-mp-status>
+
+    <script>
+      configuration = {
+        logo: '',
+        label: "AlliExpress",
+      }
+      const integration = {
+        authId: 'test',
+        password: 'password',
+        login: 'test',
+      }
+
+      const c = document.querySelector('#conf');
+      c.configuration = configuration;
+      c.addEventListener('loading',()=> { console.log('loading') });
+
+      const a = document.querySelector('#alliexpress');
+      a.addEventListener('integrate', (e) => console.log('event:',e))
+      a.integrate = () => { console.log('sadfasdfasdfasdfasdfdsa') };
+      document.addEventListener('integrate', (e) => console.log('event:',e));
+      //
+      // setTimeout(()=>{
+      //   console.log('integrated')
+      //   c.integrate = integration;
+      // },6000)
+    </script>
   </body>
 </html>
